@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "turbo": "next dev --turbo",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@prisma/client": "^4.16.2",
     "@types/node": "20.4.1",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
@@ -17,7 +19,12 @@
     "postcss": "8.4.25",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hot-toast": "^2.4.1",
+    "react-icons": "^4.10.1",
     "tailwindcss": "3.3.2",
     "typescript": "5.1.6"
+  },
+  "devDependencies": {
+    "prisma": "^4.16.2"
   }
 }
