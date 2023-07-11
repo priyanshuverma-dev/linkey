@@ -16,7 +16,14 @@ export async function POST(request: NextRequest) {
     return result;
   }
 
-  const { longUrl, shortUrl } = await request.json();
+  const { longUrl, shortUrl, userId } = await request.json();
+
+  if (!userId) {
+    return NextResponse.json({
+      error: "You are not authorized to make shot link",
+      status: 400,
+    });
+  }
 
   const reservedWords = [
     "priyanshu",
@@ -75,6 +82,7 @@ export async function POST(request: NextRequest) {
           shortUrl: shotID,
           longUrl: longUrl as string,
           clicks: 0,
+          user: userId,
         },
       });
       console.log(res);

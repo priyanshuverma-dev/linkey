@@ -1,5 +1,8 @@
 "use client";
 
+import { useUserStore } from "@/store/useUser";
+import { User } from "next-auth";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
@@ -14,10 +17,11 @@ const Create = () => {
   const [longUrl, setLongUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const session = useUserStore((state: any) => state.user);
 
   const addShortLink = async () => {
+    console.log(session);
     if (longUrl === null) return;
-
     const body = {
       longUrl,
       shortUrl,
@@ -50,7 +54,7 @@ const Create = () => {
 
   return (
     <div className="bg-[#fbfbfb]">
-      <Link href={"/"}>
+      <Link href="/">
         <GrFormClose height={40} width={40} className="h-10 w-10 " />
       </Link>
       <div className="flex h-[90vh] items-center justify-center bg-[#fbfbfb]">
@@ -60,18 +64,28 @@ const Create = () => {
           </p>
           <input
             disabled={isLoading}
-            type="text"
+            type="url"
             className="h-10 w-full rounded border p-2 text-sm outline-none"
             placeholder="Enter Long Url"
             onChange={(e) => setLongUrl(e.target.value)}
           />
-          <input
-            disabled={isLoading}
-            type="text"
-            className="h-10 w-full rounded border p-2 text-sm outline-none"
-            placeholder="Enter Short id (optional)"
-            onChange={(e) => setShortUrl(e.target.value)}
-          />
+          <div className="relative flex h-10 w-full flex-row-reverse overflow-clip rounded-lg">
+            <input
+              disabled={isLoading}
+              type="text"
+              name="shortId"
+              className="h-10 w-full rounded border p-2 text-sm outline-none"
+              placeholder="Enter Short id (optional)"
+              onChange={(e) => setShortUrl(e.target.value)}
+            />
+            <label
+              className="flex items-center rounded-l-lg border border-slate-400 bg-slate-50 px-2 text-sm text-slate-400 transition-colors duration-300 peer-focus:border-sky-400 peer-focus:bg-sky-400 peer-focus:text-white"
+              htmlFor="shortId"
+            >
+              allymodes.gq/
+            </label>
+          </div>
+
           <button
             disabled={isLoading}
             onClick={addShortLink}

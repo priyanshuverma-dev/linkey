@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import Banner from "./components/Banner";
 import DataTable from "./components/DataTable";
 import Header from "./components/Header";

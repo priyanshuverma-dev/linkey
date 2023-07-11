@@ -12,7 +12,7 @@ type IProps = {
 };
 
 const DataTable = async ({ onPage }: { onPage: boolean }) => {
-  const res = await fetch(`${process.env.NEXT_URL}/api/recents`, {
+  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/recents`, {
     method: "GET",
     next: {
       revalidate: 60,
