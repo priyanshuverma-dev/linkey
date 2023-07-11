@@ -1,10 +1,14 @@
 import React from "react";
-import LoginForm from "../components/LoginForm";
+
+export const metadata = {
+  title: "Soon",
+};
 
 const Join = () => {
   return (
     <div>
-      <LoginForm />
+      {/* <LoginForm /> */}
+      Soon
     </div>
   );
 };

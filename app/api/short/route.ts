@@ -1,6 +1,8 @@
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
+import validator from "validator";
+
 export async function POST(request: NextRequest) {
   function makeid(length: number) {
     let result = "";
@@ -42,45 +44,51 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  if (longUrl === null) {
+  if (longUrl === "") {
     return NextResponse.json({
-      error: "long url not found",
+      error: "Please fill full link Input",
       status: 400,
     });
   }
-
-  try {
-    const shortIDExist = await prisma.shortUrl.findUnique({
-      where: {
-        shortUrl: shotID,
-      },
+  if (!validator.isURL(longUrl)) {
+    return NextResponse.json({
+      error: "You Can't use invalid link",
+      status: 400,
     });
+  } else {
+    try {
+      const shortIDExist = await prisma.shortUrl.findUnique({
+        where: {
+          shortUrl: shotID,
+        },
+      });
 
-    if (shortIDExist) {
+      if (shortIDExist) {
+        return NextResponse.json({
+          status: 400,
+          error: "short link already exist",
+        });
+      }
+
+      const res = await prisma.shortUrl.create({
+        data: {
+          shortUrl: shotID,
+          longUrl: longUrl as string,
+          clicks: 0,
+        },
+      });
+      console.log(res);
+
       return NextResponse.json({
-        status: 400,
-        error: "short link already exist",
+        status: 200,
+        message: "Short link created",
+      });
+    } catch (err) {
+      console.log(err);
+      return NextResponse.json({
+        status: 500,
+        error: err,
       });
     }
-
-    const res = await prisma.shortUrl.create({
-      data: {
-        shortUrl: shotID,
-        longUrl: longUrl as string,
-        clicks: 0,
-      },
-    });
-    console.log(res);
-
-    return NextResponse.json({
-      status: 200,
-      message: "Short link created",
-    });
-  } catch (err) {
-    console.log(err);
-    return NextResponse.json({
-      status: 500,
-      error: err,
-    });
   }
 }
