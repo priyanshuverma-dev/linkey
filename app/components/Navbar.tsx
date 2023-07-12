@@ -2,21 +2,12 @@
 
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode } from "react";
 import Button from "./Button";
-import { useUserStore } from "@/store/useUser";
+import Image from "next/image";
 
 const Navbar = ({ logo }: { logo: ReactNode }) => {
-  const getUser = useUserStore((state: any) => state.getUser);
-  const user = useUserStore((state: any) => state.user);
-  useEffect(() => {
-    if (user === null) {
-      getUser();
-    }
-
-    return () => {};
-  }, [user, getUser]);
-  const { status } = useSession();
+  const { data, status } = useSession();
 
   return (
     <nav className="font-sans flex text-center sm:flex-row sm:text-left justify-between py-4 px-6 bg-white shadow sm:items-baseline w-full">
@@ -34,12 +25,21 @@ const Navbar = ({ logo }: { logo: ReactNode }) => {
             href="/auth"
             className="text-lg no-underline text-grey-darkest hover:text-blue-dark ml-2 mr-2 font-bold text-blue-400"
           >
-            Logout
+            Login
           </Link>
         ) : null}
         {status === "authenticated" ? (
-          <Button onClick={signOut}>Logout</Button>
-        ) : null}
+          <Link href={"/profile"}>
+            <Image
+              alt="  ...  "
+              className="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+              src={data.user?.image as string}
+              height={40}
+              width={40}
+            />
+          </Link>
+        ) : // <Button onClick={signOut}>Logout</Button>
+        null}
 
         {status === "loading" ? <p>Loading</p> : null}
       </div>

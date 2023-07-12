@@ -1,5 +1,6 @@
 "use client";
 
+import useCurrentUser from "@/hooks/useCurrenUser";
 import { useUserStore } from "@/store/useUser";
 import { User } from "next-auth";
 import { useSession } from "next-auth/react";
@@ -8,6 +9,8 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { BsArrowRightShort } from "react-icons/bs";
 import { GrFormClose } from "react-icons/gr";
+import LoadingModal from "../components/LoadingModal";
+import { useRouter } from "next/navigation";
 
 export const metadata = {
   title: "Create new",
@@ -17,14 +20,19 @@ const Create = () => {
   const [longUrl, setLongUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const session = useUserStore((state: any) => state.user);
+  const { data, isLoading: isUserLoading } = useCurrentUser();
+  const router = useRouter();
+  if (isUserLoading) {
+    return <LoadingModal />;
+  }
 
   const addShortLink = async () => {
-    console.log(session);
     if (longUrl === null) return;
+    const userId = data?.user?.id;
     const body = {
       longUrl,
       shortUrl,
+      userId,
     };
     setIsLoading(true);
     const toasterLoading = toast.loading("Loading..");
@@ -38,9 +46,10 @@ const Create = () => {
       });
 
       const rsData = await res.json();
-      console.log(rsData);
+
       if (rsData.status === 200) {
         toast.success(rsData.message);
+        router.push("/recents");
       } else {
         toast.error(rsData.error);
       }
@@ -82,7 +91,7 @@ const Create = () => {
               className="flex items-center rounded-l-lg border border-slate-400 bg-slate-50 px-2 text-sm text-slate-400 transition-colors duration-300 peer-focus:border-sky-400 peer-focus:bg-sky-400 peer-focus:text-white"
               htmlFor="shortId"
             >
-              allymodes.gq/
+              chatapi.ml/
             </label>
           </div>
 

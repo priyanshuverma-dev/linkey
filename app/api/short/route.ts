@@ -18,13 +18,6 @@ export async function POST(request: NextRequest) {
 
   const { longUrl, shortUrl, userId } = await request.json();
 
-  if (!userId) {
-    return NextResponse.json({
-      error: "You are not authorized to make shot link",
-      status: 400,
-    });
-  }
-
   const reservedWords = [
     "priyanshu",
     "somveer",
@@ -45,10 +38,12 @@ export async function POST(request: NextRequest) {
   const shotID: string = shortUrl || makeid(5);
 
   if (reservedWords.includes(shotID)) {
-    return NextResponse.json({
-      error: "You Can't use reserved words",
-      status: 400,
-    });
+    return NextResponse.json(
+      {
+        error: "You Can't use reserved words",
+      },
+      { status: 400 }
+    );
   }
 
   if (longUrl === "") {
@@ -58,10 +53,20 @@ export async function POST(request: NextRequest) {
     });
   }
   if (!validator.isURL(longUrl)) {
-    return NextResponse.json({
-      error: "You Can't use invalid link",
-      status: 400,
-    });
+    return NextResponse.json(
+      {
+        error: "You Can't use invalid link",
+      },
+      { status: 400 }
+    );
+  }
+  if (!userId) {
+    return NextResponse.json(
+      {
+        error: "You are not authorized to make shot link",
+      },
+      { status: 400 }
+    );
   } else {
     try {
       const shortIDExist = await prisma.shortUrl.findUnique({
@@ -71,10 +76,12 @@ export async function POST(request: NextRequest) {
       });
 
       if (shortIDExist) {
-        return NextResponse.json({
-          status: 400,
-          error: "short link already exist",
-        });
+        return NextResponse.json(
+          {
+            error: "short link already exist",
+          },
+          { status: 400 }
+        );
       }
 
       const res = await prisma.shortUrl.create({
@@ -82,7 +89,7 @@ export async function POST(request: NextRequest) {
           shortUrl: shotID,
           longUrl: longUrl as string,
           clicks: 0,
-          user: userId,
+          userId: userId,
         },
       });
       console.log(res);
@@ -93,10 +100,13 @@ export async function POST(request: NextRequest) {
       });
     } catch (err) {
       console.log(err);
-      return NextResponse.json({
-        status: 500,
-        error: err,
-      });
+      return NextResponse.json(
+        {
+          status: 500,
+          error: err,
+        },
+        { status: 500 }
+      );
     }
   }
 }

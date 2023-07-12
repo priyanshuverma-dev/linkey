@@ -27,7 +27,7 @@ model User {
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   shortUrls       ShortUrl[]
-  accounts Account[]
+  accounts        Account[]
 }
 
 model Account {

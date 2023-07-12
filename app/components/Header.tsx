@@ -1,7 +1,11 @@
-import Link from "next/link";
+"use client";
 import React from "react";
+import Button from "./Button";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
+  const router = useRouter();
+
   return (
     <div className="flex flex-col justify-around items-center gap-5 w-full h-96 p-4">
       <div className="text-center mt-8">
@@ -17,12 +21,15 @@ const Header = () => {
         </p>
       </div>
       <div>
-        <Link
+        <Button onClick={() => router.push("/create")}>
+          Create short link
+        </Button>
+        {/* <Link
           className="shadow-md rounded-md m-2 p-4 bg-[#FD5E57] text-gray-50 hover:bg-gradient-to-r hover:from-[#FD5E57] hover:to-[#FC477E]"
           href="/create"
-        >
+          >
           Create short link
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

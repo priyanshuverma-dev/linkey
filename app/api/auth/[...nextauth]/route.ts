@@ -53,35 +53,6 @@ export const authOptions: AuthOptions = {
     }),
   ],
 
-  callbacks: {
-    async jwt({ token, user }) {
-      /* Step 1: update the token based on the user object */
-      if (user) {
-        token.id = user.id;
-        token.username = user.username;
-        token.name = user.name;
-        token.email = user.email;
-        token.image = user.image;
-        token.bio = user.bio;
-        token.emailVerified = user.emailVerified;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      /* Step 2: update the session.user based on the token object */
-      if (token && session.user) {
-        session.user.id = token.id;
-        session.user.username = token.username;
-        session.user.name = token.name;
-        session.user.email = token.email;
-        session.user.image = token.image;
-        session.user.bio = token.bio;
-        session.user.emailVerified = token.emailVerified;
-      }
-      return session;
-    },
-  },
-
   debug: process.env.NODE_ENV === "development",
   session: {
     strategy: "jwt",

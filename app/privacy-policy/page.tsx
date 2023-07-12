@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Footer from "../components/Footer";
 
 const PrivacyPolicy = () => {
   return (
@@ -135,6 +136,7 @@ const PrivacyPolicy = () => {
           </Link>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

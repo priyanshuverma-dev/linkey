@@ -1,9 +1,13 @@
+"use client";
 import React from "react";
 import Table from "./Table/Table";
 import Th from "./Table/Th";
 import Tr from "./Table/Tr";
 import Td from "./Table/Td";
 import Link from "next/link";
+import useDataTable from "@/hooks/useDataTable";
+import useCurrentUser from "@/hooks/useCurrenUser";
+import LoadingModal from "./LoadingModal";
 
 type IProps = {
   link: string;
@@ -12,13 +16,24 @@ type IProps = {
 };
 
 const DataTable = async ({ onPage }: { onPage: boolean }) => {
-  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/recents`, {
-    method: "GET",
-    next: {
-      revalidate: 60,
-    },
-  });
-  const shorts: IProps[] = await res.json();
+  const { data } = useCurrentUser();
+
+  const {
+    data: shorts,
+    isLoading,
+    error,
+  }: {
+    data: IProps[];
+    isLoading: boolean;
+    error: any;
+  } = useDataTable(data?.id);
+
+  if (isLoading) {
+    return <LoadingModal />;
+  }
+  if (error?.response?.status === 404) {
+    return <p>No any Data to show</p>;
+  }
 
   return (
     <Table onPage={onPage}>
@@ -31,9 +46,9 @@ const DataTable = async ({ onPage }: { onPage: boolean }) => {
         </tr>
       </thead>
       <tbody>
-        {shorts.map((doc) => {
+        {shorts?.map((doc) => {
           return (
-            <Tr>
+            <Tr key={Math.random()}>
               <Td>*</Td>
               <Td>
                 <a target="_blank" href={`${doc.link}`}>
@@ -45,7 +60,7 @@ const DataTable = async ({ onPage }: { onPage: boolean }) => {
                   target="_blank"
                   href={`${process.env.REDIRECT_URL}/${doc.shorted}`}
                 >
-                  {doc.shorted}
+                  https://chatapi.ml/{doc.shorted}
                 </a>
               </Td>
               <Td>{doc.clicks}</Td>
