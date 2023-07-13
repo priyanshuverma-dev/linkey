@@ -22,11 +22,12 @@ const Create = () => {
 
   const addShortLink = async () => {
     if (longUrl === null) return;
-    const userId = data?.user?.id;
+    const userId = data?.id;
+    console.log(data.id);
     const body = {
       longUrl,
       shortUrl,
-      userId,
+      userId: userId,
     };
     setIsLoading(true);
     const toasterLoading = toast.loading("Loading..");
