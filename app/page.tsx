@@ -10,7 +10,6 @@ export default function Home() {
       <Navbar logo="Linkey" />
       <Header />
       <Banner />
-      <DataTable onPage={false} />
       <Footer />
     </div>
   );
