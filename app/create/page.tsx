@@ -23,7 +23,6 @@ const Create = () => {
   const addShortLink = async () => {
     if (longUrl === null) return;
     const userId = data?.id;
-    console.log(data.id);
     const body = {
       longUrl,
       shortUrl,

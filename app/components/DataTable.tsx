@@ -56,10 +56,7 @@ const DataTable = async ({ onPage }: { onPage: boolean }) => {
                 </a>
               </Td>
               <Td>
-                <a
-                  target="_blank"
-                  href={`${process.env.REDIRECT_URL}/${doc.shorted}`}
-                >
+                <a target="_blank" href={`https://chatapi.ml/${doc.shorted}`}>
                   https://chatapi.ml/{doc.shorted}
                 </a>
               </Td>
