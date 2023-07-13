@@ -19,13 +19,14 @@ export async function GET(req: NextRequest) {
         userId: userId,
       },
     });
-
     if (urlLists.length === 0) {
-      return NextResponse.json({
-        link: "---",
-        shorted: "---",
-        clicks: "---",
-      });
+      return NextResponse.json([
+        {
+          link: "----",
+          shorted: "----",
+          clicks: "----",
+        },
+      ]);
     }
 
     const data = urlLists.map((shortUrlDoc) => {

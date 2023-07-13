@@ -31,7 +31,7 @@ const DataTable = async ({ onPage }: { onPage: boolean }) => {
   if (isLoading) {
     return <LoadingModal />;
   }
-  if (shorts?.length === 0) {
+  if (shorts[0].link === "----") {
     return <p>No any Data to show</p>;
   }
 
@@ -46,7 +46,7 @@ const DataTable = async ({ onPage }: { onPage: boolean }) => {
         </tr>
       </thead>
       <tbody>
-        {shorts?.map((doc) => {
+        {shorts.map((doc) => {
           return (
             <Tr key={Math.random()}>
               <Td>*</Td>
