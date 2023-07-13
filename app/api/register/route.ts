@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { nanoid } from "nanoid";
 
 export async function POST(request: Request) {
   const body = await request.json();
@@ -13,6 +14,7 @@ export async function POST(request: Request) {
     data: {
       email,
       name,
+      username: nanoid(8),
       hashedPassword,
     },
   });

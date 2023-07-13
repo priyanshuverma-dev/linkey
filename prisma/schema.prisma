@@ -19,13 +19,15 @@ model User {
   id              String    @id @default(auto()) @map("_id") @db.ObjectId
   name            String    @default("Linkey User")
   username        String    @default("")
-  bio             String    @default("")
+  bio             String    @default("I am a linkey user ✌")
   email           String    @unique
   emailVerified   DateTime?
   image           String    @default("https://antrikshdev.tech/user.png")
   hashedPassword  String?
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
+  apiKey          ApiKey[]
+  apiKeyId        String?
   shortUrls       ShortUrl[]
   accounts        Account[]
 }
@@ -68,3 +70,43 @@ model RawData {
   shorturlId String @db.ObjectId
   shortUrl  ShortUrl @relation(fields: [shorturlId], references: [id], onDelete: Cascade)
 }
+
+
+
+model ApiKey {
+  id      String  @id @default(auto()) @map("_id") @db.ObjectId
+  key     String  @unique
+  enabled Boolean @default(true)
+  User    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String  @db.ObjectId
+
+  requests ApiRequest[]
+
+  @@unique([userId, key, enabled])
+}
+
+model ApiRequest {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  timestamp DateTime @default(now())
+  method    String
+  path      String
+  status    Int
+  duration  Int
+
+  usedApiKey String
+
+  ApiKey   ApiKey @relation(fields: [apiKeyId], references: [id])
+  apiKeyId String @db.ObjectId
+
+  @@unique([apiKeyId])
+}
+
+model VerificationToken {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  identifier  String
+  token       String    @unique
+  expires     DateTime
+
+  @@unique([identifier, token])
+}
+
