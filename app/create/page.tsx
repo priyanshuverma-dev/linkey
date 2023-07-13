@@ -1,9 +1,6 @@
 "use client";
 
 import useCurrentUser from "@/hooks/useCurrenUser";
-import { useUserStore } from "@/store/useUser";
-import { User } from "next-auth";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
