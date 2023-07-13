@@ -31,7 +31,7 @@ const DataTable = async ({ onPage }: { onPage: boolean }) => {
   if (isLoading) {
     return <LoadingModal />;
   }
-  if (error?.response?.status === 404) {
+  if (shorts?.length === 0) {
     return <p>No any Data to show</p>;
   }
 

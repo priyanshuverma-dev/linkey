@@ -1,5 +1,4 @@
 import Banner from "./components/Banner";
-import DataTable from "./components/DataTable";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";

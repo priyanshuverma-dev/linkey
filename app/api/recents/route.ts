@@ -19,15 +19,13 @@ export async function GET(req: NextRequest) {
         userId: userId,
       },
     });
-    console.log(urlLists);
 
     if (urlLists.length === 0) {
-      return NextResponse.json(
-        {
-          error: "No urls Yet",
-        },
-        { status: 404 }
-      );
+      return NextResponse.json({
+        link: "---",
+        shorted: "---",
+        clicks: "---",
+      });
     }
 
     const data = urlLists.map((shortUrlDoc) => {
