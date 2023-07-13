@@ -9,6 +9,7 @@ import { signOut } from "next-auth/react";
 import LoadingModal from "../components/LoadingModal";
 import Footer from "../components/Footer";
 import Image from "next/image";
+import Head from "next/head";
 
 export default function Profile() {
   const { data: user, isLoading } = useCurrentUser();
@@ -19,6 +20,9 @@ export default function Profile() {
 
   return (
     <main className="profile-page">
+      <Head>
+        <title>{user?.name}</title>
+      </Head>
       <section className="relative block" style={{ height: "500px" }}>
         <div
           className="absolute top-0 w-full h-full bg-center bg-cover"

@@ -1,9 +1,7 @@
 import React from "react";
 import AuthForm from "../components/AuthForm";
+import Head from "next/head";
 
-export const metadata = {
-  title: "Get Authentication",
-};
 const Auth = () => {
   return (
     <div
@@ -19,6 +17,9 @@ const Auth = () => {
         bg-gray-100
       "
     >
+      <Head>
+        <title>Get Authentication</title>
+      </Head>
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2
           className="

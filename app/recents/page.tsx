@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import DataTable from "../components/DataTable";
 import Navbar from "../components/Navbar";
 import { Metadata } from "next";

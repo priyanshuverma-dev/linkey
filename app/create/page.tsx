@@ -8,10 +8,7 @@ import { BsArrowRightShort } from "react-icons/bs";
 import { GrFormClose } from "react-icons/gr";
 import LoadingModal from "../components/LoadingModal";
 import { useRouter } from "next/navigation";
-
-export const metadata = {
-  title: "Create new",
-};
+import Head from "next/head";
 
 const Create = () => {
   const [longUrl, setLongUrl] = useState("");
@@ -60,6 +57,9 @@ const Create = () => {
 
   return (
     <div className="bg-[#fbfbfb]">
+      <Head>
+        <title>Create New</title>
+      </Head>
       <Link href="/">
         <GrFormClose height={40} width={40} className="h-10 w-10 " />
       </Link>
