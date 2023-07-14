@@ -52,7 +52,6 @@ export const authOptions: AuthOptions = {
       },
     }),
   ],
-
   debug: process.env.NODE_ENV === "development",
   session: {
     strategy: "jwt",
@@ -61,7 +60,7 @@ export const authOptions: AuthOptions = {
   pages: {
     signIn: "/auth",
     signOut: "/auth",
-    // error: "/global-error", // Error code passed in query string as ?error=
+    error: "/_error", // Error code passed in query string as ?error=
   },
 };
 

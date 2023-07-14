@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
     const { currentUser } = await serverAuth();
-    console.log(currentUser);
+
     return NextResponse.json(currentUser);
   } catch (error) {
     console.log(error);
