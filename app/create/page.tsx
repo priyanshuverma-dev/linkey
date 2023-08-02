@@ -88,7 +88,7 @@ const Create = () => {
               className="flex items-center rounded-l-lg border border-slate-400 bg-slate-50 px-2 text-sm text-slate-400 transition-colors duration-300 peer-focus:border-sky-400 peer-focus:bg-sky-400 peer-focus:text-white"
               htmlFor="shortId"
             >
-              chatapi.ml/
+             {process.env.REDIRECT_URL}/
             </label>
           </div>
 
