@@ -18,6 +18,8 @@ type IProps = {
 const DataTable = async ({ onPage }: { onPage: boolean }) => {
   const { data } = useCurrentUser();
 
+  const PL = process.env.REDIRECT_URL || "https://scio.us.to";
+
   const {
     data: shorts,
     isLoading,
@@ -56,8 +58,8 @@ const DataTable = async ({ onPage }: { onPage: boolean }) => {
                 </a>
               </Td>
               <Td>
-                <a target="_blank" href={`${process.env.REDIRECT_URL}/${doc.shorted}`}>
-                  {process.env.REDIRECT_URL}/{doc.shorted}
+                <a target="_blank" href={`${PL}/${doc.shorted}`}>
+                  {PL}/{doc.shorted}
                 </a>
               </Td>
               <Td>{doc.clicks}</Td>

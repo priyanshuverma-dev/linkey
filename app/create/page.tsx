@@ -15,6 +15,7 @@ const Create = () => {
   const [shortUrl, setShortUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { data, isLoading: isUserLoading } = useCurrentUser();
+  const PL = process.env.REDIRECT_URL || "https://scio.us.to";
   const router = useRouter();
   if (isUserLoading) {
     return <LoadingModal />;
@@ -88,7 +89,7 @@ const Create = () => {
               className="flex items-center rounded-l-lg border border-slate-400 bg-slate-50 px-2 text-sm text-slate-400 transition-colors duration-300 peer-focus:border-sky-400 peer-focus:bg-sky-400 peer-focus:text-white"
               htmlFor="shortId"
             >
-             {process.env.REDIRECT_URL}/
+             {PL}/
             </label>
           </div>
 
